@@ -54,7 +54,7 @@ function GamePage() {
           <img className="icon" src={allPieces.BlackKing} alt="king"></img>
           <h4 className="px-1">Black</h4> <div>{state.playerTeam === Color.Black ? "(You)" : ""}</div>
           <div className="col-12 p-0">Vanguards placed: {state.game.board.blackVanguards}</div>
-          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.Black)}>Join as Black</button>)}          
+          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.Black)}>Join as Black</button>)}
           {state.game.inCheck === Color.Black && <h6 className="col-12 p-0">{state.game.inCheck} is in check!</h6>}
         </div>
         <div className="col-12 p-0 flex pieces left top">
@@ -90,7 +90,7 @@ function GamePage() {
       </div>)}
 
       <div className="col-sm-12 col-md-6 p-1 flex center">
-        {state.placingVanguards && <h4 className="col-12">{`Place all vanguards to begin`}</h4>}
+        {state.placingVanguards && <h4 className="col-12">{`Place all vanguards by right clicking your pawns to begin.`}</h4>}
         {!state.placingVanguards && state.game.playersTurn !== Color.Null && <h4 className="col-12">{`${state.game.playersTurn}'s move`}</h4>}
         <Board />
 
@@ -123,7 +123,8 @@ function GamePage() {
 
       {!isMobileDeviceOrTablet && (<div className="col-sm-6 col-md-2 mt-4 top flex">
         <div className="col-12 p-0 flex right header">
-          <h4 className="px-1">White</h4> <div>{state.playerTeam === Color.White ? "(You)" : ""}</div>
+          <div>{state.playerTeam === Color.White ? "(You)" : ""}</div>
+          <h4 className="px-1">White</h4>
           <img className="icon" src={allPieces.WhiteKing} alt="king"></img>
           <div className="col-12 p-0 flex right">Vanguards placed: {state.game.board.whiteVanguards}</div>
           {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.White)}>Join as White</button>)}

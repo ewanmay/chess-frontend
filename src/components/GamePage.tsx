@@ -54,7 +54,8 @@ function GamePage() {
           <img className="icon" src={allPieces.BlackKing} alt="king"></img>
           <h4 className="px-1">Black</h4> <div>{state.playerTeam === Color.Black ? "(You)" : ""}</div>
           <div className="col-12 p-0">Vanguards placed: {state.game.board.blackVanguards}</div>
-          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.Black)}>Join as Black</button>)}
+          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.Black)}>Join as Black</button>)}          
+          {state.game.inCheck === Color.Black && <h6 className="col-12 p-0">{state.game.inCheck} is in check!</h6>}
         </div>
         <div className="col-12 p-0 flex pieces left top">
           <h6 className="col-12 p-0 flex">Taken</h6>
@@ -75,7 +76,7 @@ function GamePage() {
           <img className="icon" src={allPieces.WhiteKing} alt="king"></img>
           <div className="col-12 p-0 flex right">Vanguards placed: {state.game.board.whiteVanguards}</div>
           {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.White)}>Join as White</button>)}
-          {state.game.inCheck === Color.White && <h6 className="col-12">{state.game.inCheck} is in check!</h6>}
+          {state.game.inCheck === Color.White && <h6 className="col-12 p-0">{state.game.inCheck} is in check!</h6>}
         </div>
         <div className="col-12 p-0 flex pieces top">
           <h6 className="col-12 p-0 right">Taken</h6>
@@ -126,7 +127,7 @@ function GamePage() {
           <img className="icon" src={allPieces.WhiteKing} alt="king"></img>
           <div className="col-12 p-0 flex right">Vanguards placed: {state.game.board.whiteVanguards}</div>
           {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.White)}>Join as White</button>)}
-          {state.game.inCheck === Color.White && <h6 className="col-12">{state.game.inCheck} is in check!</h6>}
+          {state.game.inCheck === Color.White && <h6 className="col-12 p-0 right flex">{state.game.inCheck} is in check!</h6>}
         </div>
         <div className="col-12 p-0 flex pieces top">
           <h6 className="col-12 p-0 right">Taken</h6>

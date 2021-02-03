@@ -118,7 +118,7 @@ export default function Board() {
               }}
               key={Math.random()}
               style={getTileDimensions()}>
-              <div className={shouldHighlight(rowIndex, colIndex) ? "highlight flex center " : ""}>
+              <div className={shouldHighlight(rowIndex, colIndex) ? "highlight flex center piece" : "flex center piece fill"}>
                 <ChessPiece piece={tile.piece}></ChessPiece>
                 {colIndex === 0 && (<div className="row-number">
                   {rowIndex + 1}

@@ -52,6 +52,16 @@
   height: 80px;
 }
 
+.piece-image {
+  max-width: 100%;
+  width: 40%;
+  height: auto;
+}
+
+.piece {
+  height: 100%;
+}
+
 .log {
   background-color: lightgrey;
 }

@@ -15,9 +15,9 @@ function ChessPiece({ piece }: PieceProps) {
   }
 
   return (
-    <div className="piece cursor">
+    <div className="piece cursor flex fill center">
       {((piece.type && piece.color && piece.color !== Color.Null)) && (
-        <img src={getPieceImage(piece.type, piece.color)} alt="chesspiece"></img>
+        <img src={getPieceImage(piece.type, piece.color)} alt="chesspiece" className="piece-image"></img>
         )}
     </div>
   );

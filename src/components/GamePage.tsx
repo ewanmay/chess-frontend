@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { AppContext } from '../context/context';
+import { useMediaQuery } from "react-responsive";
 import { Color, PieceType } from '../context/types';
 import Board from './Board';
 import allPieces, { PieceImages } from './piece-images';
@@ -8,6 +9,8 @@ import WinModal from './WinModal';
 import Log from './Log';
 
 function GamePage() {
+
+  const isMobileDeviceOrTablet = useMediaQuery({ maxWidth: 800 })
   const [state, dispatch] = useContext(AppContext)
 
   const handleReset = () => {
@@ -45,14 +48,13 @@ function GamePage() {
   return (
     <div className="col-12 p-0 flex">
       <WinModal winner={state.game.winner} />
-      <div className="col-1 sider"></div>
-      <div className="col-2 mt-4 top flex">
+      {!isMobileDeviceOrTablet && <div className="col-1 sider"></div>}
+      <div className="col-sm-6 col-md-2 mt-4 top flex">
         <div className="col-12 p-0 flex left header">
-          <img className="icon" src={allPieces.BlackKing} alt="king"></img>          
+          <img className="icon" src={allPieces.BlackKing} alt="king"></img>
           <h4 className="px-1">Black</h4> <div>{state.playerTeam === Color.Black ? "(You)" : ""}</div>
           <div className="col-12 p-0">Vanguards placed: {state.game.board.blackVanguards}</div>
           {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.Black)}>Join as Black</button>)}
-          {state.game.inCheck === Color.Black && <h6 className="col-12">{state.game.inCheck} is in check!</h6>}
         </div>
         <div className="col-12 p-0 flex pieces left top">
           <h6 className="col-12 p-0 flex">Taken</h6>
@@ -62,13 +64,31 @@ function GamePage() {
                 <img className="icon p-1" src={getPieceImage(o.type, o.color)} alt="king"></img></div>)
             )}
         </div>
-        
+
         <div className="col-12 p-0 flex bottom">
           <Log log={state.log.blackMoves}></Log>
         </div>
       </div>
+      {isMobileDeviceOrTablet && (<div className="col-sm-6 col-md-2 mt-4 top flex">
+        <div className="col-12 p-0 flex right header">
+          <h4 className="px-1">White</h4> <div>{state.playerTeam === Color.White ? "(You)" : ""}</div>
+          <img className="icon" src={allPieces.WhiteKing} alt="king"></img>
+          <div className="col-12 p-0 flex right">Vanguards placed: {state.game.board.whiteVanguards}</div>
+          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.White)}>Join as White</button>)}
+          {state.game.inCheck === Color.White && <h6 className="col-12">{state.game.inCheck} is in check!</h6>}
+        </div>
+        <div className="col-12 p-0 flex pieces top">
+          <h6 className="col-12 p-0 right">Taken</h6>
+          {state.game.takenPieces
+            .filter(o => o.color === Color.Black).map(o => (
+              <div>
+                <img className="icon p-1" src={getPieceImage(o.type, o.color)} alt="king"></img></div>)
+            )}
+        </div>
+        <Log log={state.log.whiteMoves}></Log>
+      </div>)}
 
-      <div className="col-6 p-1 flex center">
+      <div className="col-sm-12 col-md-6 p-1 flex center">
         {state.placingVanguards && <h4 className="col-12">{`Place all vanguards to begin`}</h4>}
         {!state.placingVanguards && state.game.playersTurn !== Color.Null && <h4 className="col-12">{`${state.game.playersTurn}'s move`}</h4>}
         <Board />
@@ -100,7 +120,7 @@ function GamePage() {
           </div>)}
       </div>
 
-      <div className="col-2 mt-4 top flex">
+      {!isMobileDeviceOrTablet && (<div className="col-sm-6 col-md-2 mt-4 top flex">
         <div className="col-12 p-0 flex right header">
           <h4 className="px-1">White</h4> <div>{state.playerTeam === Color.White ? "(You)" : ""}</div>
           <img className="icon" src={allPieces.WhiteKing} alt="king"></img>
@@ -117,8 +137,8 @@ function GamePage() {
             )}
         </div>
         <Log log={state.log.whiteMoves}></Log>
-      </div>
-      <div className="col-1 sider"></div>
+      </div>)}
+      {!isMobileDeviceOrTablet && <div className="col-1 sider"></div>}
     </div >
   );
 }

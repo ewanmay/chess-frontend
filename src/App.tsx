@@ -14,6 +14,10 @@ function App() {
     state.socket.on('board-size', (size: number) => dispatch({ type: 'SET_BOARD_SIZE', payload: size }));    
     state.socket.on('vanguards-placed', (bool: Boolean) => dispatch({ type: 'SET_VANGUARD_MODE', payload: !bool }));
     state.socket.on('log-update', (log: Log) => dispatch({ type: 'UPDATE_LOG', payload: log }));
+    state.socket.on('test', (msg: string) => console.log(msg))
+
+    state.socket.emit('join-lobby', {lobbyCode: 'AAAA', username: 'Dylan'})
+    console.log("Component mounted")
   }, [])
 
   return (

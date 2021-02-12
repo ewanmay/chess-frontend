@@ -36,6 +36,15 @@ function GamePage() {
     state.socket.emit('start-game')
   }
 
+  const getQueenMoveCounter = (color: Color) => {
+    const queen = state.game.board.tiles.find(row => row.find(tile => tile.piece.color === color && tile.piece.type === PieceType.Queen))
+    if (queen) {
+      const x = queen.map(tile => tile.piece.queenCantPlayCounter);
+      return Math.min(...x)
+    }
+    return 0
+  }
+
   const boardSizes = [8, 10, 12, 14, 16];
 
   const getPieceImage = (pieceType: PieceType, color: Color) => {
@@ -54,8 +63,13 @@ function GamePage() {
           <img className="icon" src={allPieces.BlackKing} alt="king"></img>
           <h4 className="px-1">Black</h4> <div>{state.playerTeam === Color.Black ? "(You)" : ""}</div>
           <div className="col-12 p-0">Vanguards placed: {state.game.board.blackVanguards}</div>
-          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.Black)}>Join as Black</button>)}
           {state.game.inCheck === Color.Black && <h6 className="col-12 p-0">{state.game.inCheck} is in check!</h6>}
+          {getQueenMoveCounter(Color.Black) > 0 &&
+            <div className="col-12 p-0">
+              Queen can move in {getQueenMoveCounter(Color.Black)} turns
+            </div>
+          }
+          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.Black)}>Join as Black</button>)}
         </div>
         <div className="col-12 p-0 flex pieces left top">
           <h6 className="col-12 p-0 flex">Taken</h6>
@@ -127,8 +141,15 @@ function GamePage() {
           <h4 className="px-1">White</h4>
           <img className="icon" src={allPieces.WhiteKing} alt="king"></img>
           <div className="col-12 p-0 flex right">Vanguards placed: {state.game.board.whiteVanguards}</div>
-          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.White)}>Join as White</button>)}
           {state.game.inCheck === Color.White && <h6 className="col-12 p-0 right flex">{state.game.inCheck} is in check!</h6>}
+          {getQueenMoveCounter(Color.White) > 0 ?
+            <div className="col-12 p-0 flex right">
+              Queen can move in {getQueenMoveCounter(Color.White)} turns
+            </div> :
+            <div className="col-12 p-0 flex right">
+              Queen can move
+            </div>}
+          {state.playerTeam === Color.Null && (<button className="btn btn-primary m-1" onClick={() => joinTeam(Color.White)}>Join as White</button>)}
         </div>
         <div className="col-12 p-0 flex pieces top">
           <h6 className="col-12 p-0 right">Taken</h6>
